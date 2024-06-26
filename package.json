@@ -1,0 +1,14 @@
+{
+  "name": "navism",
+  "version": "1.0.0",
+  "description": "* 서버 시간을 알려주는 사이트 네이비즘의 클론코딩\r * 깃과 프론트엔드 기초 학습이 목적",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

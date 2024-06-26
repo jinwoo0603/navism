@@ -3,7 +3,31 @@
     <head>
         <meta charset="utf-8">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script></script>
+        <script>
+            const url = new URL(window.location.href);
+            const params = url.searchParams;
+            const loc = params.get('loc')
+
+            if (loc) {
+                $.ajax({
+                    type: 'get',
+                    url: $('#urlInput').val(),
+                    async: true,
+                    success: function(result) {
+                        //timer setting here
+                    },
+                    error: function(request, status, error) {
+                        alert('서버 정보를 받아오는데 실패했습니다')
+                        return
+                    }
+                })
+            }
+            else {
+                //initialize to standard time
+            }
+            //timer code here
+            //I don't know about javascript datetime yet lmao
+        </script>
     </head>
     <body>
         <header>

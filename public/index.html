@@ -4,29 +4,54 @@
         <meta charset="utf-8">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script>
+            function timer() {
+                let timeArr = $('#address').val().split(':').map(value => parseInt(value, 10));
+                timeArr[2]++;
+                if (timeArr[2] > 60) {
+                    timeArr[2] -= 60;
+                    timeArr[1]++;
+                    if (timeArr[1] > 60) {
+                        timeArr[1] -= 60;
+                        timeArr[0]++;
+                        if (timeArr[0] > 24) {
+                            timeArr[0] -= 24;
+                        }
+                    }
+                }
+                $('#address').val(timeArr.map(value => String(value).padStart(2, '0')).join(':'));
+            }
             const url = new URL(window.location.href);
             const params = url.searchParams;
-            const loc = params.get('loc')
+            const loc = params.get('loc');
 
             if (loc) {
                 $.ajax({
                     type: 'get',
                     url: $('#urlInput').val(),
                     async: true,
-                    success: function(result) {
-                        //timer setting here
+                    success: function(result, textStatus, jqXHR) {
+                        let time = new Date(jqXHR.getResponseHeader('Date'));
+                        let hours = String(time.getHours()).padStart(2, '0');
+                        let minutes = String(time.getMinutes()).padStart(2, '0');
+                        let seconds = String(time.getSeconds()).padStart(2, '0');
+                        $('#address').val(hours + ':' + minutes + ':' + seconds);
+                        setInterval(timer, 1000);
                     },
                     error: function(request, status, error) {
-                        alert('서버 정보를 받아오는데 실패했습니다')
-                        return
+                        alert('서버 정보를 받아오는데 실패했습니다');
+                        return;
                     }
                 })
             }
             else {
-                //initialize to standard time
+                let time = new Date();
+                let hours = String(time.getHours()).padStart(2, '0');
+                let minutes = String(time.getMinutes()).padStart(2, '0');
+                let seconds = String(time.getSeconds()).padStart(2, '0');
+                $('#address').val(hours + ':' + minutes + ':' + seconds);
+                setInterval(timer, 1000);
             }
-            //timer code here
-            //I don't know about javascript datetime yet lmao
+
         </script>
     </head>
     <body>
